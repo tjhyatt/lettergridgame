@@ -1,4 +1,4 @@
-# Letter Grid Game
+# Lettergrid Game
 
 > A simple word builing game built with Vue.js
 

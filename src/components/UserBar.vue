@@ -2,7 +2,7 @@
   <div class="absolute top-0 left-0 right-0 flex items-center h-12 z-40">
     <div class="flex flex-grow px-4">
       <div class="text-white text-xl">
-        Letter Grid Game - Daily #{{ gameNumber }}
+        Lettergrid Game - Daily #{{ gameNumber }}
       </div>
 
       <button class="text-white ml-auto" @click="$store.commit('setIsStatsActive', true)">
