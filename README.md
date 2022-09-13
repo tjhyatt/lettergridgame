@@ -1,6 +1,6 @@
-# Good Grid Heroku
+# Letter Grid Game
 
-> A word game built with Vue.js
+> A simple word builing game built with Vue.js
 
 ## Build Setup
 
