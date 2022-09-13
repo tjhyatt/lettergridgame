@@ -19,8 +19,9 @@ export const planetChartData = () => {
   const labels = games.map(game => '#' + game.gameNumber)
   const scores = games.map(game => game.score)
   const highest = Math.max(...scores)
-  const lowest = Math.min(...scores)
-  const stepSize = (Math.round((highest - lowest) / 10) * 10) / 2
+  // const lowest = Math.min(...scores)
+  const stepSize = (Math.round(highest / 10) * 10) / 4
+  const stepSize2 = (Math.round(stepSize / 10) * 10)
 
   const chart = {
     type: 'line',
@@ -52,7 +53,7 @@ export const planetChartData = () => {
               beginAtZero: true,
               fontColor: '#222',
               padding: 5,
-              stepSize: stepSize
+              stepSize: stepSize2
             }
           }
         ],
