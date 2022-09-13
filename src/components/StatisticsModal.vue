@@ -147,6 +147,10 @@ export default {
       const diff = nextMidnightLuxon.diff(now, ['hours'])
 
       this.timeToMidnight = Duration.fromObject({hours: diff.hours}).toFormat('hh:mm:ss')
+
+      if (nextMidnightIso > nextMidnightLuxon) {
+        location.reload()
+      }
     }, 1000)
   },
 
