@@ -33,9 +33,13 @@
               </div>
             </div>
           </div>
-          <div class="w-full h-96 mb-8">
+          <div class="w-full h-80 mb-8">
             <div class="uppercase text-center mb-4">Game History</div>
             <canvas id="planet-chart"></canvas>
+          </div>
+          <div class="w-full mb-8">
+            <div class="uppercase text-center">Next Game</div>
+            <div class="text-3xl text-center">{{ timeToMidnight }}</div>
           </div>
         </div>
       </div>
@@ -45,6 +49,7 @@
 
 <script>
 import Chart from 'chart.js'
+import { DateTime, Duration } from 'luxon'
 import { planetChartData, fetchHistory } from '../common/data'
 import { gameNumber } from '../common/helpers'
 import { mapGetters } from 'vuex'
@@ -54,7 +59,8 @@ export default {
 
   data () {
     return {
-      history: null
+      history: null,
+      timeToMidnight: 0
     }
   },
 
@@ -128,6 +134,38 @@ export default {
       const chart = new Chart(ctx, planetChartData())
 
       chart.update()
+    }
+
+    let nextMidnight = new Date()
+    nextMidnight.setHours(24, 0, 0, 0)
+
+    const nextMidnightIso = this.toIsoString(nextMidnight)
+    const nextMidnightLuxon = DateTime.fromISO(nextMidnightIso)
+
+    setInterval(() => {
+      const now = DateTime.now()
+      const diff = nextMidnightLuxon.diff(now, ['hours'])
+
+      this.timeToMidnight = Duration.fromObject({hours: diff.hours}).toFormat('hh:mm:ss')
+    }, 1000)
+  },
+
+  methods: {
+    toIsoString (date) {
+      let tzo = -date.getTimezoneOffset()
+      let dif = tzo >= 0 ? '+' : '-'
+      let pad = function (num) {
+        return (num < 10 ? '0' : '') + num
+      }
+
+      return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds()) +
+        dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+        ':' + pad(Math.abs(tzo) % 60)
     }
   }
 }

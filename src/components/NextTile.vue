@@ -1,7 +1,6 @@
 <template>
   <div
     v-if="tile"
-    v-click-outside="deselectTile"
     class="tile"
     :class="[
       { 'tile--touch-dragging' : isTouchDragging },
