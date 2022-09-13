@@ -60,7 +60,7 @@ export default {
   data () {
     return {
       history: null,
-      timeToMidnight: null
+      timeToMidnight: '00:00:00'
     }
   },
 
