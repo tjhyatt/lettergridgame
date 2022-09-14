@@ -60,7 +60,10 @@ export default {
   data () {
     return {
       history: null,
-      timeToMidnight: '00:00:00'
+      timeToMidnight: '00:00:00',
+      nextMidnight: null,
+      now: null,
+      timer: null
     }
   },
 
@@ -70,9 +73,7 @@ export default {
     }),
 
     score () {
-      if (!this.history) {
-        return 0
-      }
+      if (!this.history) return 0
 
       const finishedGame = this.history.games.find(game => game.gameNumber === gameNumber())
 
@@ -84,9 +85,7 @@ export default {
     },
 
     highscore () {
-      if (!this.history) {
-        return 0
-      }
+      if (!this.history) return 0
 
       const scores = this.history.games.map(game => {
         return game.score
@@ -96,9 +95,7 @@ export default {
     },
 
     average () {
-      if (!this.history) {
-        return 0
-      }
+      if (!this.history) return 0
 
       let total = 0
       this.history.games.forEach(game => {
@@ -136,20 +133,25 @@ export default {
       chart.update()
     }
 
-    let nextMidnight = new Date()
-    nextMidnight.setHours(24, 0, 0, 0)
+    let midnight = new Date()
+    midnight.setHours(24, 0, 0, 0)
 
-    const nextMidnightIso = this.toIsoString(nextMidnight)
-    const nextMidnightLuxon = DateTime.fromISO(nextMidnightIso)
+    const nextMidnightIso = this.toIsoString(midnight)
+    this.nextMidnight = DateTime.fromISO(nextMidnightIso)
 
-    setInterval(() => {
-      const now = DateTime.now()
-      const diff = nextMidnightLuxon.diff(now, ['hours'])
+    this.timer = setInterval(() => {
+      this.now = DateTime.now()
+      const diff = this.nextMidnight.diff(this.now, ['hours'])
 
       this.timeToMidnight = Duration.fromObject({hours: diff.hours}).toFormat('hh:mm:ss')
 
-      if (nextMidnightIso > nextMidnightLuxon) {
-        location.reload()
+      if (this.now >= this.nextMidnight) {
+        this.timeToMidnight = '00:00:00'
+        // this.nextMidnight = this.nextMidnight.plus({ days: 1 })
+
+        // this.$store.dispatch('initiateBoard')
+        // this.$store.commit('setIsStatsActive', false)
+        clearInterval(this.timer)
       }
     }, 1000)
   },
