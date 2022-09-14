@@ -5,7 +5,7 @@
       class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-black bg-opacity-50 py-4 z-50"
       @click="$store.commit('setIsStatsActive', false)"
     >
-      <div class="w-full max-w-lg max-h-full h-auto bg-gray-50 rounded-sm p-4 overflow-auto" @click.stop="() => {}">
+      <div class="w-full max-w-lg max-h-full h-auto bg-gray-100 rounded-sm p-4 overflow-auto" @click.stop="() => {}">
         <div class="flex flex-col">
           <button class="ml-auto" @click="$store.commit('setIsStatsActive', false)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -50,7 +50,7 @@
 <script>
 import Chart from 'chart.js'
 import { DateTime, Duration } from 'luxon'
-import { planetChartData, fetchHistory } from '../common/data'
+import { chartData, fetchHistory } from '../common/chartdata'
 import { gameNumber } from '../common/helpers'
 import { mapGetters } from 'vuex'
 
@@ -119,7 +119,7 @@ export default {
         this.history = fetchHistory()
 
         const ctx = document.getElementById('planet-chart')
-        const chart = new Chart(ctx, planetChartData())
+        const chart = new Chart(ctx, chartData())
 
         chart.update()
       }
@@ -131,7 +131,7 @@ export default {
 
     if (this.history) {
       const ctx = document.getElementById('planet-chart')
-      const chart = new Chart(ctx, planetChartData())
+      const chart = new Chart(ctx, chartData())
 
       chart.update()
     }

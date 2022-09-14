@@ -1,10 +1,10 @@
-import { getHistory } from '../common/localstorage.service'
+import { getHistory } from './localstorage.service'
 
 export const fetchHistory = () => {
   return getHistory()
 }
 
-export const planetChartData = () => {
+export const chartData = () => {
   const history = getHistory()
 
   let games = []
@@ -30,7 +30,7 @@ export const planetChartData = () => {
       datasets: [
         {
           data: scores,
-          backgroundColor: 'rgba(61, 245, 80, .6)',
+          backgroundColor: 'rgba(61, 245, 80, .4)',
           borderColor: '#3df550',
           fontColor: '#222',
           borderWidth: 3,
@@ -75,5 +75,3 @@ export const planetChartData = () => {
 
   return chart
 }
-
-export default planetChartData
