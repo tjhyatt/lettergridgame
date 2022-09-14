@@ -34,10 +34,10 @@
             </div>
           </div>
           <div class="w-full h-80 mb-8">
-            <div class="uppercase text-center mb-4">Game History</div>
+            <div class="uppercase text-center mb-4">Game History <span class="text-xs opacity-70">last 7</span></div>
             <canvas id="planet-chart"></canvas>
           </div>
-          <div class="w-full mb-8">
+          <div class="w-full my-8">
             <div class="uppercase text-center">Next Game</div>
             <div class="text-3xl text-center">{{ timeToMidnight }}</div>
           </div>
