@@ -1,19 +1,21 @@
 <template>
   <div id="app" class="bg-gray-800">
     <UserBar />
+    <HelpModal />
     <StatisticsModal />
     <router-view />
   </div>
 </template>
 
 <script>
+import HelpModal from './components/HelpModal.vue'
 import StatisticsModal from './components/StatisticsModal.vue'
 import UserBar from './components/UserBar.vue'
 
 export default {
   name: 'App',
 
-  components: { UserBar, StatisticsModal }
+  components: { UserBar, HelpModal, StatisticsModal }
 }
 </script>
 

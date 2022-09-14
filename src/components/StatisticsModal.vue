@@ -55,7 +55,7 @@ import { gameNumber } from '../common/helpers'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'PlanetChart',
+  name: 'StatisticsModal',
 
   data () {
     return {
