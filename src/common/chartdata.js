@@ -30,7 +30,7 @@ export const chartData = () => {
       datasets: [
         {
           data: scores,
-          backgroundColor: 'rgba(61, 245, 80, .4)',
+          backgroundColor: 'rgba(61, 245, 80, .25)',
           borderColor: '#3df550',
           fontColor: '#222',
           borderWidth: 3,

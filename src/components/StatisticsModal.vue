@@ -5,7 +5,7 @@
       class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-black bg-opacity-50 py-4 z-50"
       @click="$store.commit('setIsStatsActive', false)"
     >
-      <div class="w-full max-w-lg max-h-full h-auto bg-gray-100 rounded-sm p-4 overflow-auto" @click.stop="() => {}">
+      <div class="w-full max-w-lg max-h-full h-auto text-gray-900 bg-gray-100 rounded-sm p-4 overflow-auto" @click.stop="() => {}">
         <div class="flex flex-col">
           <button class="ml-auto" @click="$store.commit('setIsStatsActive', false)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -147,10 +147,6 @@ export default {
 
       if (this.now >= this.nextMidnight) {
         this.timeToMidnight = '00:00:00'
-        // this.nextMidnight = this.nextMidnight.plus({ days: 1 })
-
-        // this.$store.dispatch('initiateBoard')
-        // this.$store.commit('setIsStatsActive', false)
         clearInterval(this.timer)
       }
     }, 1000)
