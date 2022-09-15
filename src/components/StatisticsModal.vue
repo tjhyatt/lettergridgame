@@ -33,7 +33,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full h-80 mb-8">
+          <div class="w-full h-64 mb-8">
             <div class="uppercase text-center mb-4">Game History <span class="text-xs opacity-70">last 7</span></div>
             <canvas id="planet-chart"></canvas>
           </div>
