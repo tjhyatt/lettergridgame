@@ -28,7 +28,6 @@
             <div class="tile__value">{{ slot.value }}</div>
           </div>
         </template>
-        <!-- <button v-if="isGameOver && !isFindingWords" class="board__find-words-btn btn btn--primary" @click="findWords">Find Words</button> -->
       </div>
 
       <div class="bottom-row">
@@ -88,22 +87,14 @@ export default {
       gameNumber: gameNumber(),
       isGameReady: false,
 
-      columns: 5,
-      rows: 5,
-
       displayResults: [],
       highlightedBoardLetters: [],
       isHighlightedBinLetter: false,
 
-      // isGameOver: false,
       isFindingWords: false,
-      isTileDragging: false,
       results: [],
 
-      tileSize: 90,
-      tileGap: 4,
       totalScore: 0,
-
       currentScore: 0,
 
       roundWords: [],
@@ -121,6 +112,7 @@ export default {
       'bin': 'getBin',
       'binSize': 'getBinSize',
       'board': 'getBoard',
+      'boardSize': 'getBoardSize',
       'bonusTiles': 'getBonusTiles',
       'isGameOver': 'getIsGameOver',
       'roundIndex': 'getRoundIndex',
@@ -131,17 +123,17 @@ export default {
 
     boardStyles () {
       return `
-        grid-template-columns: repeat(${this.columns}, 1fr);
-        grid-template-rows: repeat(${this.rows}, 1fr);
+        grid-template-columns: repeat(${this.boardSize[1]}, 1fr);
+        grid-template-rows: repeat(${this.boardSize[0]}, 1fr);
       `
     },
 
     isTouch () {
       if (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
         return true
-      } else {
-        return false
       }
+
+      return false
     }
   },
 
@@ -155,7 +147,7 @@ export default {
 
   mounted () {
     this.$store.dispatch('initiateBoard')
-    this.highlightBoardLetterReset([5, 5])
+    this.highlightBoardLetterReset(this.boardSize)
 
     setTimeout(() => {
       this.isGameReady = true
@@ -166,8 +158,8 @@ export default {
     findWords () {
       this.isFindingWords = true
 
-      const rows = this.rows
-      const columns = this.columns
+      const rows = this.boardSize[0]
+      const columns = this.boardSize[1]
       const minWordLength = 2
       const maxWordLength = 5
       const columnsToCheck = columns - minWordLength + 1
@@ -397,8 +389,8 @@ export default {
       })
 
       // find all words on row that includes col
-      const rows = this.rows
-      const columns = this.columns
+      const rows = this.boardSize[0]
+      const columns = this.boardSize[1]
       const minWordLength = 2
       const maxWordLength = 5
       const columnsToCheck = columns - minWordLength + 1
@@ -614,7 +606,7 @@ export default {
     },
 
     highlightBoardLetter (rowIndex, colIndex) {
-      this.highlightBoardLetterReset([5, 5])
+      this.highlightBoardLetterReset(this.boardSize)
       this.highlightedBoardLetters[rowIndex][colIndex] = 1
     },
 

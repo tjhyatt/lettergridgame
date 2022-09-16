@@ -13,6 +13,7 @@ const state = {
   bin: [],
   binSize: 5,
   board: [],
+  boardSize: [5, 5],
   bonusTiles: [],
   isGameOver: false,
   isNextTileReady: true,
@@ -32,6 +33,10 @@ const getters = {
 
   getBoard (state) {
     return state.board
+  },
+
+  getBoardSize (state) {
+    return state.boardSize
   },
 
   getBonusTiles (state) {
@@ -76,6 +81,10 @@ const mutations = {
       roundIndex: state.roundIndex,
       score: state.score
     })
+  },
+
+  setBoardSize: (state, payload) => {
+    state.boardSize = payload
   },
 
   setBonusTiles: (state, payload) => {
@@ -305,10 +314,12 @@ const actions = {
   initiateBoard: async ({commit, dispatch}, payload) => {
     const localSeed = getLocalSeed()
     const localState = getLocalState()
-    const columns = 5
-    const rows = 5
-    const binSize = 5
+    const columns = random.intBetween(4, 5)
+    const rows = random.intBetween(3, 5)
+    const binSize = random.intBetween(3, 8)
     const tileAmount = (columns * rows) + binSize
+
+    commit('setBoardSize', [rows, columns])
 
     const tiles = await dispatch('generateTiles', tileAmount)
     commit('setTiles', tiles)
