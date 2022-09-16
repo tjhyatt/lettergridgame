@@ -18,6 +18,20 @@
               <div class="flex flex-col items-center">
                 <div class="text-xs uppercase">Score</div>
                 <div class="text-3xl">{{ score }}</div>
+                <div v-if="score" class="relative mt-1">
+                  <transition name="fade">
+                    <div v-if="isScoreCopied" class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-500 bg-opacity-90 text-white text-xs uppercase py-1 w-20 text-center rounded-md">Score copied</div>
+                  </transition>
+                  <button
+                    class="flex items-center text-xs text-white uppercase bg-green-600 hover:bg-green-700 transition-colors duration-150 rounded-md px-2 py-1"
+                    @click="copyScoreToClipboard"
+                  >
+                    Share
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="ml-1 w-3 h-3">
+                      <path d="M13 4.5a2.5 2.5 0 11.702 1.737L6.97 9.604a2.518 2.518 0 010 .792l6.733 3.367a2.5 2.5 0 11-.671 1.341l-6.733-3.367a2.5 2.5 0 110-3.475l6.733-3.366A2.52 2.52 0 0113 4.5z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div class="flex flex-col items-center">
                 <div class="text-xs uppercase">Top</div>
@@ -63,7 +77,8 @@ export default {
       timeToMidnight: '00:00:00',
       nextMidnight: null,
       now: null,
-      timer: null
+      timer: null,
+      isScoreCopied: false
     }
   },
 
@@ -153,6 +168,17 @@ export default {
   },
 
   methods: {
+    copyScoreToClipboard () {
+      const scoreString = `Lettergrid #${gameNumber()} - Score: ${this.score}`
+
+      navigator.clipboard.writeText(scoreString)
+
+      this.isScoreCopied = true
+      setTimeout(() => {
+        this.isScoreCopied = false
+      }, 3000)
+    },
+
     toIsoString (date) {
       let tzo = -date.getTimezoneOffset()
       let dif = tzo >= 0 ? '+' : '-'
