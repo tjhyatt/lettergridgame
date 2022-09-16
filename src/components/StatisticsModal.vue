@@ -18,7 +18,7 @@
               <div class="flex flex-col items-center">
                 <div class="text-xs uppercase">Score</div>
                 <div class="text-3xl">{{ score }}</div>
-                <div v-if="score" class="relative mt-1">
+                <div v-if="isGameOver" class="relative mt-1">
                   <transition name="fade">
                     <div v-if="isScoreCopied" class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-500 bg-opacity-90 text-white text-xs uppercase py-1 w-20 text-center rounded-md">Score copied</div>
                   </transition>
@@ -84,7 +84,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      'isActive': 'getIsStatsActive'
+      'isActive': 'getIsStatsActive',
+      'isGameOver': 'getIsGameOver'
     }),
 
     score () {
