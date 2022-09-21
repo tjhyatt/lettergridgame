@@ -69,6 +69,10 @@ const mutations = {
     state.bin = payload
   },
 
+  setBinSize: (state, payload) => {
+    state.binSize = payload
+  },
+
   setBoard: (state, payload) => {
     state.board = payload
     state.isGameOver = isGameOver(state.board)
@@ -341,6 +345,7 @@ const actions = {
       commit('setRoundIndex', localState.roundIndex)
       commit('setScore', localState.score)
     } else {
+      commit('setBinSize', binSize)
       commit('setBoard', board)
     }
 
