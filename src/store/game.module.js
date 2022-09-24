@@ -79,6 +79,7 @@ const mutations = {
 
     setLocalState({
       bin: state.bin,
+      binSize: state.binSize,
       board: state.board,
       bonusTiles: state.bonusTiles,
       isGameOver: state.isGameOver,
@@ -109,6 +110,7 @@ const mutations = {
 
     setLocalState({
       bin: state.bin,
+      binSize: state.binSize,
       board: state.board,
       bonusTiles: state.bonusTiles,
       isGameOver: state.isGameOver,
@@ -139,6 +141,7 @@ const mutations = {
 
     setLocalState({
       bin: state.bin,
+      binSize: state.binSize,
       board: state.board,
       bonusTiles: state.bonusTiles,
       isGameOver: state.isGameOver,
@@ -341,6 +344,7 @@ const actions = {
 
     if (currentSeed === localSeed) {
       commit('setBin', localState.bin)
+      commit('setBinSize', localState.binSize)
       commit('setBoard', localState.board)
       commit('setRoundIndex', localState.roundIndex)
       commit('setScore', localState.score)
