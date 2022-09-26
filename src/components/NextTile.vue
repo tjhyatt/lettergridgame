@@ -7,9 +7,9 @@
       { 'tile--click-dragging' : isClickDragging }
     ]"
     :style="styles"
-    @mousedown="clickStart"
-    @mousemove="clickMove"
-    @mouseup="clickEnd"
+    @pointerdown="clickStart"
+    @pointermove="clickMove"
+    @pointerup="clickEnd"
     @touchstart="touchStart"
     @touchmove="touchmove"
     @touchend="touchend"
@@ -85,6 +85,8 @@ export default {
     },
 
     clickStart (e) {
+      // e.target.setPointerCapute(e.pointerId)
+
       this.isClicked = true
 
       if (this.initPos.x === 0 && this.initPos.y === 0) {
@@ -97,14 +99,8 @@ export default {
       if (this.isClicked) {
         this.isClickDragging = true
 
-        // check if using firefox browser user agent
-        if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-          this.pos.x += e.movementX
-          this.pos.y += e.movementY
-        } else {
-          this.pos.x += e.movementX / window.devicePixelRatio
-          this.pos.y += e.movementY / window.devicePixelRatio
-        }
+        this.pos.x += e.movementX
+        this.pos.y += e.movementY
 
         const hoveredElements = document.elementsFromPoint(e.clientX, e.clientY)
         const hoveredTile = hoveredElements.find(el => {
