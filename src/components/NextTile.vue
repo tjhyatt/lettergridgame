@@ -85,7 +85,7 @@ export default {
     },
 
     clickStart (e) {
-      // e.target.setPointerCapute(e.pointerId)
+      e.target.setPointerCapture(e.pointerId)
 
       this.isClicked = true
 
@@ -133,6 +133,8 @@ export default {
     },
 
     clickEnd (e) {
+      e.target.releasePointerCapture(e.pointerId)
+
       this.isClicked = false
       this.isClickDragging = false
 
