@@ -7,9 +7,9 @@
       { 'tile--click-dragging' : isClickDragging }
     ]"
     :style="styles"
-    @pointerdown="clickStart"
-    @pointermove="clickMove"
-    @pointerup="clickEnd"
+    @mousedown="clickStart"
+    @mousemove="clickMove"
+    @mouseup="clickEnd"
     @touchstart="touchStart"
     @touchmove="touchmove"
     @touchend="touchend"
@@ -85,8 +85,6 @@ export default {
     },
 
     clickStart (e) {
-      e.target.setPointerCapture(e.pointerId)
-
       this.isClicked = true
 
       if (this.initPos.x === 0 && this.initPos.y === 0) {
@@ -132,9 +130,7 @@ export default {
       }
     },
 
-    clickEnd (e) {
-      e.target.releasePointerCapture(e.pointerId)
-
+    clickEnd () {
       this.isClicked = false
       this.isClickDragging = false
 
