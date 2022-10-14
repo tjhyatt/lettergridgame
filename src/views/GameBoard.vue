@@ -2,7 +2,24 @@
   <div class="section" v-shake="{ active: currentScore, intensity: currentScore }">
     <div v-if="isGameReady" class="gameboard">
       <div class="score">
-        <div class="score__pill">{{ score }}</div>
+        <div class="score__pill bg-white text-black">{{ score }}</div>
+        <div class="flex mt-3">
+          <div
+            v-for="(target, i) in scoreTargets"
+            :key="target"
+            class="score__pill items-start text-sm mx-1"
+            :class="[
+              {'bg-bronze text-black': i === 0},
+              {'bg-silver text-black': i === 1},
+              {'bg-gold text-black': i === 2},
+            ]"
+          >
+            <svg v-if="score >= target" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            <span v-else>{{ target }}</span>
+          </div>
+        </div>
       </div>
 
       <div
@@ -117,6 +134,7 @@ export default {
       'isGameOver': 'getIsGameOver',
       'roundIndex': 'getRoundIndex',
       'score': 'getScore',
+      'scoreTargets': 'getScoreTargets',
       'tile': 'getNextTile',
       'isStatsActive': 'getIsStatsActive'
     }),
@@ -902,16 +920,14 @@ $tilecount: 5;
 }
 
 .score {
+  align-items: center;
   display: flex;
+  flex-direction: column;
   font-size: 1.3em;
-  justify-content: center;
   margin: 0 0 .75em;
 
   &__pill {
-    background: rgb(244, 244, 245);
-    // border: 1px solid #ffffff;
     border-radius: 20px;
-    color: #222;
     padding: .1em .8em .2em;
     user-select: none;
   }

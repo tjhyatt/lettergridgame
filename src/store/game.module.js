@@ -19,6 +19,7 @@ const state = {
   isNextTileReady: true,
   roundIndex: 0,
   score: 0,
+  scoreTargets: [],
   tiles: []
 }
 
@@ -57,6 +58,10 @@ const getters = {
 
   getScore (state) {
     return state.score
+  },
+
+  getScoreTargets (state) {
+    return state.scoreTargets
   }
 }
 
@@ -119,6 +124,10 @@ const mutations = {
     })
   },
 
+  setScoreTargets: (state, payload) => {
+    state.scoreTargets = payload
+  },
+
   setTiles: (state, payload) => {
     state.tiles = payload
   },
@@ -150,9 +159,23 @@ const mutations = {
     })
 
     if (state.isGameOver) {
+      let award = 'No award'
+      if (state.score >= state.scoreTargets[0]) {
+        award = 'Bronze'
+      }
+
+      if (state.score >= state.scoreTargets[1]) {
+        award = 'Silver'
+      }
+
+      if (state.score >= state.scoreTargets[2]) {
+        award = 'Gold'
+      }
+
       addHistory({
         gameNumber: currentSeed,
-        score: state.score
+        score: state.score,
+        award: award
       })
     }
   },
@@ -163,6 +186,57 @@ const mutations = {
 }
 
 const actions = {
+  generateScoreTargets: async ({commit, dispatch}, payload) => {
+    const boardSize = payload.rows * payload.columns
+    let boardSizeMultiplier = 1.1
+
+    switch (boardSize) {
+      case 16:
+        boardSizeMultiplier = 1.2
+        break
+
+      case 20:
+        boardSizeMultiplier = 1.75
+        break
+
+      case 25:
+        boardSizeMultiplier = 2.2
+        break
+
+      default:
+        break
+    }
+
+    const tileScore = payload.tiles.reduce((a, b) => ({ value: a.value + b.value }))
+    let bonusMultiplier = 0
+
+    payload.bonusTiles.forEach(bonus => {
+      if (bonus.type === 'dw') {
+        bonusMultiplier += 10
+      }
+
+      if (bonus.type === 'dl') {
+        bonusMultiplier += 5
+      }
+
+      if (bonus.type === 'tw') {
+        bonusMultiplier += 15
+      }
+
+      if (bonus.type === 'tl') {
+        bonusMultiplier += 10
+      }
+    })
+
+    bonusMultiplier *= boardSizeMultiplier
+
+    const bronze = Math.floor((tileScore.value + bonusMultiplier) * boardSizeMultiplier)
+    const silver = Math.floor((tileScore.value + bonusMultiplier) * boardSizeMultiplier * 1.5)
+    const gold = Math.floor((tileScore.value + bonusMultiplier) * boardSizeMultiplier * 2)
+
+    commit('setScoreTargets', [bronze, silver, gold])
+  },
+
   generateTiles: async ({dispatch}, amount) => {
     let commonBucket = ['a', 'a', 'a', 'a', 'e', 'e', 'e', 'e', 'i', 'i', 'o', 'o', 'o', 's', 's', 's', 't', 't', 't', 'u']
     let semiCommonBucket = ['b', 'c', 'd', 'd', 'g', 'h', 'l', 'm', 'n', 'n', 'p', 'r', 'r', 'u', 'y', '']
@@ -259,7 +333,9 @@ const actions = {
       bonusSpaces.splice(bonusSpacesIndex, 1)
       return bonus
     })
+
     commit('setBonusTiles', bonusTiles)
+    return bonusTiles
   },
 
   makeTile: async ({dispatch}, letter) => {
@@ -340,7 +416,8 @@ const actions = {
       }
     }
 
-    dispatch('generateBonuses', {rows: rows, columns: columns})
+    const bonusTiles = await dispatch('generateBonuses', {rows: rows, columns: columns})
+    dispatch('generateScoreTargets', {tiles: tiles, bonusTiles: bonusTiles, rows: rows, columns: columns})
 
     if (currentSeed === localSeed) {
       commit('setBin', localState.bin)

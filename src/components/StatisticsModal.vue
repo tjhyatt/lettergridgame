@@ -47,6 +47,46 @@
               </div>
             </div>
           </div>
+          <div class="w-full mb-8">
+            <div class="uppercase text-center mb-4">Awards</div>
+            <div class="flex flex-col mx-1">
+              <div class="flex flex-nowrap items-end mb-2">
+                <div class="w-24 text-sm uppercase flex-shrink-0">
+                  Gold <span v-if="awards[3]" class="text-xs">({{ awards[3] }})</span>
+                </div>
+                <div v-if="awards[3]" class="w-full">
+                  <div class="bg-gold h-4 rounded-sm" :style="`width: ${awards[3] / awardsHighest * 100}%`"></div>
+                </div>
+              </div>
+
+              <div class="flex flex-nowrap items-end mb-2">
+                <div class="w-24 text-sm uppercase flex-shrink-0">
+                  Silver <span v-if="awards[2]" class="text-xs">({{ awards[2] }})</span>
+                </div>
+                <div v-if="awards[2]" class="w-full">
+                  <div class="bg-silver h-4 rounded-sm" :style="`width: ${awards[2] / awardsHighest * 100}%`"></div>
+                </div>
+              </div>
+
+              <div class="flex flex-nowrap items-end mb-2">
+                <div class="w-24 text-sm uppercase flex-shrink-0">
+                  Bronze <span v-if="awards[1]" class="text-xs">({{ awards[1] }})</span>
+                </div>
+                <div v-if="awards[1]" class="w-full">
+                  <div class="bg-bronze h-4 rounded-sm" :style="`width: ${awards[1] / awardsHighest * 100}%`"></div>
+                </div>
+              </div>
+
+              <div class="flex flex-nowrap items-end mb-2">
+                <div class="w-24 text-sm uppercase flex-shrink-0">
+                  No Award <span v-if="awards[0]" class="text-xs">({{ awards[0] }})</span>
+                </div>
+                <div v-if="awards[0]" class="w-full">
+                  <div class="bg-black h-4 rounded-sm" :style="`width: ${awards[0] / awardsHighest * 100}%`"></div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="w-full h-64 mb-8">
             <div class="uppercase text-center mb-4">Game History <span class="text-xs opacity-70">last 7</span></div>
             <canvas id="planet-chart"></canvas>
@@ -123,6 +163,21 @@ export default {
 
     played () {
       return this.history ? this.history.games.length : 0
+    },
+
+    awards () {
+      if (!this.history) return 0
+
+      const nothingCount = this.history.games.filter(game => game.award === 'No award').length
+      const bronzeCount = this.history.games.filter(game => game.award === 'Bronze').length
+      const silverCount = this.history.games.filter(game => game.award === 'Silver').length
+      const goldCount = this.history.games.filter(game => game.award === 'Gold').length
+
+      return [nothingCount, bronzeCount, silverCount, goldCount]
+    },
+
+    awardsHighest () {
+      return Math.max(...this.awards)
     }
   },
 
