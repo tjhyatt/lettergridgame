@@ -3,10 +3,16 @@ import App from './App'
 import router from './router'
 import { store } from './store/store'
 import VueLuxon from 'vue-luxon'
+import VueMatomo from 'vue-matomo'
 
 Vue.use(VueLuxon)
 
 Vue.config.productionTip = false
+
+Vue.use(VueMatomo, {
+  host: 'https://matomo.tjhyatt.com/',
+  siteId: 5,
+})
 
 Vue.directive('shake', function (el, binding) {
   var shakeIntensity = binding.value.intensity ? binding.value.intensity : 0
