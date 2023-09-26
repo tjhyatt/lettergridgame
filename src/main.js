@@ -73,3 +73,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+window._paq.push(['trackPageView'])
