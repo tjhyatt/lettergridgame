@@ -325,7 +325,7 @@ $tilegap: .5em;
 
 @keyframes pulse {
   0% { background: rgb(52, 232, 39); }
-  50% { background: rgb(106, 254, 95); }
+  50% { background: rgb(192, 255, 188); }
   100% { background: rgb(52, 232, 39); }
 }
 </style>
