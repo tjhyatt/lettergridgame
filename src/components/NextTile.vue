@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="tile"
-    class="tile"
+    class="tile tile--next"
     :class="[
       { 'tile--touch-dragging' : isTouchDragging },
       { 'tile--click-dragging' : isClickDragging }
@@ -301,6 +301,10 @@ $tilegap: .5em;
     right: .5em;
   }
 
+  &--next {
+    animation: pulse linear infinite 3s;
+  }
+
   &--touch-dragging {
     opacity: .5;
     pointer-events: none;
@@ -317,5 +321,11 @@ $tilegap: .5em;
       width: 345px;
     }
   }
+}
+
+@keyframes pulse {
+  0% { background: rgb(52, 232, 39); }
+  50% { background: rgb(106, 254, 95); }
+  100% { background: rgb(52, 232, 39); }
 }
 </style>

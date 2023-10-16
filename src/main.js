@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 
 Vue.use(VueMatomo, {
   host: 'https://matomo.tjhyatt.com/',
-  siteId: 5,
+  siteId: 5
 })
 
 Vue.directive('shake', function (el, binding) {

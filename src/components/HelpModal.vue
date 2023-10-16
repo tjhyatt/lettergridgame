@@ -14,7 +14,7 @@
           </button>
           <div class="w-full mb-8">
             <div class="uppercase text-center mb-4">How to play</div>
-            <p>Drag and drop the "Current Tile" onto an empty spot on the board.</p>
+            <p>Drag and drop the green "Current Tile" onto an empty spot on the board.</p>
             <p>The aim of the game is to get a high score by making as many words as possible from a random assortment of tiles.</p>
             <p>If you receive a tile you don't want on your board you can place it in the bin. You have limited bin spaces so you them wisely!</p>
             <p>The game will end when all the board spaces are filled. Good luck and have fun!</p>

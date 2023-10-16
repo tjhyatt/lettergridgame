@@ -3,21 +3,24 @@
     <div v-if="isGameReady" class="gameboard">
       <div class="score">
         <div class="score__pill bg-white text-black">{{ score }}</div>
-        <div class="flex mt-3">
-          <div
-            v-for="(target, i) in scoreTargets"
-            :key="target"
-            class="score__pill items-start text-sm mx-1"
-            :class="[
-              {'bg-bronze text-black': i === 0},
-              {'bg-silver text-black': i === 1},
-              {'bg-gold text-black': i === 2},
-            ]"
-          >
-            <svg v-if="score >= target" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-            <span v-else>{{ target }}</span>
+        <div class="flex flex-col mt-3">
+          <div class="text-center text-white mb-2">Score Targets</div>
+          <div class="flex">
+            <div
+              v-for="(target, i) in scoreTargets"
+              :key="target"
+              class="score__pill items-start text-sm mx-1"
+              :class="[
+                {'bg-bronze text-black': i === 0},
+                {'bg-silver text-black': i === 1},
+                {'bg-gold text-black': i === 2},
+              ]"
+            >
+              <svg v-if="score >= target" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              <span v-else>{{ target }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1032,7 +1035,7 @@ $tilecount: 5;
   text-transform: uppercase;
 }
 
-/deep/ .rotate {
+.rotate {
   animation: rotate linear infinite 3s;
 }
 
