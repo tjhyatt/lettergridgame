@@ -30,10 +30,10 @@ body {
 }
 
 #app {
-  background-attachment: fixed;
-  // background-image: url(./assets/bg2_darken.jpg);
+  background: linear-gradient(rgba(0, 0, 0, .35), rgba(0, 0, 0, .6), rgba(0, 0, 0, .7)), url(./assets/gum_leaves_tiled.jpg);
   background-position: 50%;
-  background-size: cover;
+  background-repeat: repeat;
+  background-size: 350px;
   font-family: 'Oswald', Helvetica, Arial, sans-serif;
   min-height: 100vh;
   overflow: hidden;

@@ -947,9 +947,9 @@ $tilecount: 5;
 }
 
 .tile {
-  background: rgba(255, 255, 255, .95);
+  background: rgba(255, 255, 255, 1);
   border-radius: .25em;
-  box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, .8);
   box-sizing: border-box;
   cursor: grab;
   height: $tilesize;
