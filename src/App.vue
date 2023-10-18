@@ -33,7 +33,7 @@ body {
   background: linear-gradient(rgba(0, 0, 0, .35), rgba(0, 0, 0, .5), rgba(0, 0, 0, .65)), url(./assets/gum_leaves_tiled.jpg);
   background-position: 50%;
   background-repeat: repeat;
-  background-size: 300px;
+  background-size: 270px;
   font-family: 'Oswald', Helvetica, Arial, sans-serif;
   min-height: 100vh;
   overflow: hidden;
