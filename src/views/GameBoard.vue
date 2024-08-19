@@ -90,7 +90,7 @@
 
         <div class="next-tile">
           <div class="next-tile__heading">Next Tile</div>
-          <preview-tile v-if="!isGameOver" :tile="previewTile" />
+          <preview-tile v-if="previewTile" :tile="previewTile" />
         </div>
 
         <div v-if="binSize > 0" class="bin">
