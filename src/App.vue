@@ -8,19 +8,19 @@
 </template>
 
 <script>
-import HelpModal from './components/HelpModal.vue'
-import StatisticsModal from './components/StatisticsModal.vue'
-import UserBar from './components/UserBar.vue'
+import HelpModal from "./components/HelpModal.vue";
+import StatisticsModal from "./components/StatisticsModal.vue";
+import UserBar from "./components/UserBar.vue";
 
 export default {
-  name: 'App',
+  name: "App",
 
-  components: { UserBar, HelpModal, StatisticsModal }
-}
+  components: { UserBar, HelpModal, StatisticsModal },
+};
 </script>
 
 <style lang="scss">
-@import './scss/styles.scss';
+@import "./scss/styles.scss";
 
 html,
 body {
@@ -30,11 +30,10 @@ body {
 }
 
 #app {
-  background: linear-gradient(rgba(0, 0, 0, .35), rgba(0, 0, 0, .5), rgba(0, 0, 0, .65)), url(./assets/gum_leaves_tiled.jpg);
+  background-image: url(../static/bg.jpg);
   background-position: 50%;
-  background-repeat: repeat;
-  background-size: 270px;
-  font-family: 'Oswald', Helvetica, Arial, sans-serif;
+  background-size: cover;
+  font-family: "Oswald", Helvetica, Arial, sans-serif;
   min-height: 100vh;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;

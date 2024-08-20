@@ -7,7 +7,7 @@
       <div class="score">
         <div class="score__pill bg-white text-black">{{ score }}</div>
         <div class="flex flex-col mt-3">
-          <div class="text-center text-white mb-2">Score Targets</div>
+          <!-- <div class="text-center text-gray-800 mb-2">Score Targets</div> -->
           <div class="flex">
             <div
               v-for="(target, i) in scoreTargets"
@@ -105,6 +105,23 @@
             <div type="bin" class="tile-slot tile__letter"></div>
           </div>
         </div>
+      </div>
+
+      <div
+        class="relative mt-12 mb-8 text-white text-center opacity-80 text-xs z-0"
+      >
+        Photo by
+        <a
+          class="underline"
+          href="https://unsplash.com/@birminghammuseumstrust?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+          >Birmingham Museums Trust</a
+        >
+        on
+        <a
+          class="underline"
+          href="https://unsplash.com/s/photos/abstract-art-painting?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+          >Unsplash</a
+        >
       </div>
     </div>
     <div v-else>
@@ -1013,6 +1030,7 @@ $tilecount: 5;
     border-radius: 20px;
     padding: 0.1em 0.8em 0.2em;
     user-select: none;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
   }
 
   &__help {
@@ -1029,7 +1047,7 @@ $tilecount: 5;
 .tile {
   background: rgba(255, 255, 255, 1);
   border-radius: 0.25em;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
   box-sizing: border-box;
   cursor: grab;
   height: $tilesize;
