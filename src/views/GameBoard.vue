@@ -107,6 +107,19 @@
         </div>
       </div>
 
+      <div class="text-center mt-12">
+        <div class="text-white mb-4">
+          Enjoying the game? Buy me a beer to show you gratitude!
+        </div>
+        <a
+          class="bg-gray-50 text-gray-900 py-1 px-3 rounded-full transition-all duration-200 hover:bg-gray-200"
+          style="padding-bottom: 5px"
+          href="https://www.buymeabeer.online/tjhyatt"
+          target="_blank"
+          >🍻 Buy me a beer</a
+        >
+      </div>
+
       <div
         class="relative mt-12 mb-8 text-white text-center opacity-80 text-xs z-0"
       >
