@@ -108,11 +108,14 @@
       </div>
 
       <div class="text-center mt-12">
-        <div class="text-white mb-4">
-          Enjoying the game? Buy me a beer to show you gratitude!
+        <div
+          class="text-white mb-4 text-lg md:text-base"
+          style="text-shadow: 0 0 2px rgb(0, 0, 0)"
+        >
+          Enjoying the game?<br />Buy me a beer to show you gratitude!
         </div>
         <a
-          class="bg-gray-50 text-gray-900 py-1 px-3 rounded-full transition-all duration-200 hover:bg-gray-200"
+          class="bg-gray-50 text-gray-900 text-base py-1 px-3 rounded-full transition-all duration-200 hover:bg-gray-200"
           style="padding-bottom: 5px"
           href="https://www.buymeabeer.online/tjhyatt"
           target="_blank"
@@ -205,6 +208,8 @@ export default {
       return `
         grid-template-columns: repeat(${this.boardSize[1]}, 1fr);
         grid-template-rows: repeat(${this.boardSize[0]}, 1fr);
+        width: fit-content;
+        margin: auto;
       `;
     },
 
@@ -1026,7 +1031,7 @@ $tilecount: 5;
 
 .bottom-row {
   display: flex;
-  margin: 15px 0 0;
+  margin: 25px 0 0;
   position: relative;
   text-align: center;
   z-index: 10;
