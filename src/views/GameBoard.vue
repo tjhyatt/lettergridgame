@@ -112,15 +112,19 @@
           class="text-white mb-4 text-lg md:text-base"
           style="text-shadow: 0 0 2px rgb(0, 0, 0)"
         >
-          Enjoying the game?<br />Buy me a beer to show you gratitude!
+          Enjoying the game?<br />Buy me a coffee to show you gratitude!
         </div>
-        <a
-          class="bg-gray-50 text-gray-900 text-base py-1 px-3 rounded-full transition-all duration-200 hover:bg-gray-200"
-          style="padding-bottom: 5px"
-          href="https://www.buymeabeer.online/tjhyatt"
-          target="_blank"
-          >🍻 Buy me a beer</a
-        >
+        <div class="text-center">
+          <a
+            class="text-center"
+            href="https://www.buymeacoffee.com/tjhyatt"
+            target="_blank"
+            ><img
+              src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+              alt="Buy Me A Coffee"
+              style="height: 60px !important; width: 217px !important"
+          /></a>
+        </div>
       </div>
 
       <div
