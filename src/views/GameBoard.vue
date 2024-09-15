@@ -114,9 +114,9 @@
         >
           Enjoying the game?<br />Buy me a coffee to show you gratitude!
         </div>
-        <div class="text-center">
+        <div>
           <a
-            class="text-center"
+            class="flex justify-center"
             href="https://www.buymeacoffee.com/tjhyatt"
             target="_blank"
             ><img
