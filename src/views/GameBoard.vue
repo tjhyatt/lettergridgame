@@ -112,7 +112,7 @@
           class="text-white mb-4 text-lg md:text-base"
           style="text-shadow: 0 0 2px rgb(0, 0, 0)"
         >
-          Enjoying the game?<br />Buy me a coffee to show you gratitude!
+          Enjoying the game?<br />Buy me a coffee to show your gratitude!
         </div>
         <div>
           <a
