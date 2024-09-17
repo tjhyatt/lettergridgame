@@ -11,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'GameBoard',
       component: GameBoard
+    },
+    {
+      path: '/score/:score',
+      name: 'Score',
+      component: GameBoard
     }
   ]
 })
