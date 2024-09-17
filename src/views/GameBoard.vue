@@ -244,6 +244,10 @@ export default {
     this.$store.dispatch("initiateBoard");
     this.highlightBoardLetterReset(this.boardSize);
 
+    if (this.$route.name === "Score" && !this.isGameOver) {
+      this.$router.push("/");
+    }
+
     setTimeout(() => {
       this.isGameReady = true;
     }, 1000);
