@@ -235,9 +235,7 @@ export default {
       if (newValue) {
         this.$store.commit("setIsStatsActive", true);
 
-        if (this.$route.name !== "Score") {
-          this.$router.push(`/score/${this.score}`);
-        }
+        this.$router.push(`/score/${this.score}`);
       }
     },
   },
