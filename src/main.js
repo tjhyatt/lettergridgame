@@ -11,7 +11,8 @@ Vue.config.productionTip = false
 
 Vue.use(VueMatomo, {
   host: 'https://matomo.tjhyatt.com/',
-  siteId: 5
+  siteId: 5,
+  router: router,
 })
 
 Vue.directive('shake', function (el, binding) {
@@ -52,7 +53,7 @@ Vue.directive('shake', function (el, binding) {
     }, shakeSpeed)
   }
 
-  function getRandomFloat (min, max) {
+  function getRandomFloat(min, max) {
     if (max === 0) {
       return 0
     } else {
@@ -60,7 +61,7 @@ Vue.directive('shake', function (el, binding) {
     }
   }
 
-  function easeOutQuad (x) {
+  function easeOutQuad(x) {
     return 1 - (1 - x) * (1 - x)
   }
 })
