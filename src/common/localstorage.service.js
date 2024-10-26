@@ -35,8 +35,10 @@ export const createHistory = (data) => {
 
 export const addHistory = (game) => {
   const history = JSON.parse(window.localStorage.getItem("gamehistory"));
-  const foundGame = history.games.some((game) => game.id === game.id);
-  
+  const foundGame = history.games.find(
+    (hist) => hist.gameNumber === game.gameNumber
+  );
+
   if (!foundGame) {
     let newHistory = {};
 
