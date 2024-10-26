@@ -46,6 +46,10 @@
               accept=".txt"
               @change="importedData"
             />
+
+            <p v-if="isError" class="text-sm text-red-600 mt-2">
+              Import failed. Please ensure you've selected the correct file.
+            </p>
           </div>
         </div>
       </div>
@@ -59,6 +63,12 @@ import { createHistory } from "../../common/localstorage.service";
 
 export default {
   name: "HelpModal",
+
+  data() {
+    return {
+      isError: false,
+    };
+  },
 
   computed: {
     ...mapGetters({
@@ -76,17 +86,26 @@ export default {
     },
 
     importedData(event) {
+      this.isError = false;
+
       const file = event.target.files[0];
       const reader = new FileReader();
 
-      reader.onload = function (e) {
+      reader.onload = (e) => {
         const base64String = e.target.result.split(",")[1];
         const json = atob(base64String);
 
-        createHistory(decodeURIComponent(json));
-      };
+        try {
+          JSON.parse(decodeURIComponent(json));
 
-      this.$store.commit("setActiveModal", "stat_modal");
+          createHistory(decodeURIComponent(json));
+
+          this.$store.commit("setActiveModal", "stat_modal");
+        } catch (e) {
+          this.isError = true;
+          return false;
+        }
+      };
 
       reader.readAsDataURL(file);
     },
