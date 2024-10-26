@@ -6,30 +6,30 @@
 
 <script>
 export default {
-  props: ['x', 'y', 'score'],
+  props: ["x", "y", "score"],
 
-  data () {
+  data() {
     return {
-      isActive: true
-    }
+      isActive: true,
+    };
   },
 
   computed: {
-    style () {
+    style() {
       return {
         left: `${this.x}px`,
-        top: `${this.y}px`
-      }
-    }
+        top: `${this.y}px`,
+      };
+    },
   },
 
   methods: {
-    remove () {
-      this.$destroy()
-      this.$el.parentNode.removeChild(this.$el)
-    }
-  }
-}
+    remove() {
+      this.$destroy();
+      this.$el.parentNode.removeChild(this.$el);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -39,7 +39,7 @@ export default {
   font-size: 30px;
   font-weight: bold;
   position: absolute;
-  text-shadow: rgba(0,0,0,0.6) 0.1em 0.15em 0.15em;
+  text-shadow: rgba(0, 0, 0, 0.6) 0.1em 0.15em 0.15em;
   transform: translate(-50%, -50%);
   z-index: 10;
 }

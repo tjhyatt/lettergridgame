@@ -1,6 +1,8 @@
 <template>
   <div id="app" class="bg-gray-800">
     <UserBar />
+    <ExportModal />
+    <ImportModal />
     <HelpModal />
     <StatisticsModal />
     <router-view />
@@ -8,14 +10,16 @@
 </template>
 
 <script>
-import HelpModal from "./components/HelpModal.vue";
-import StatisticsModal from "./components/StatisticsModal.vue";
+import ExportModal from "./components/modals/ExportModal.vue";
+import ImportModal from "./components/modals/ImportModal.vue";
+import HelpModal from "./components/modals/HelpModal.vue";
+import StatisticsModal from "./components/modals/StatisticsModal.vue";
 import UserBar from "./components/UserBar.vue";
 
 export default {
   name: "App",
 
-  components: { UserBar, HelpModal, StatisticsModal },
+  components: { UserBar, ExportModal, ImportModal, HelpModal, StatisticsModal },
 };
 </script>
 

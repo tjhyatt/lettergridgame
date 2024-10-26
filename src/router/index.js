@@ -1,21 +1,21 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import GameBoard from '@/views/GameBoard'
+import Vue from "vue";
+import Router from "vue-router";
+import GameBoard from "@/views/GameBoard";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   routes: [
     {
-      path: '/',
-      name: 'GameBoard',
-      component: GameBoard
+      path: "/",
+      name: "GameBoard",
+      component: GameBoard,
     },
     {
-      path: '/score/:score',
-      name: 'Score',
-      component: GameBoard
-    }
-  ]
-})
+      path: "/score/:score",
+      name: "Score",
+      component: GameBoard,
+    },
+  ],
+});

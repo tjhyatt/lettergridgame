@@ -6,10 +6,58 @@
       </div>
 
       <div class="flex items-center text-black opacity-80 ml-auto">
-        <button @click="exportData">Export</button>
-        <button class="ml-2" @click="importData">Import</button>
-        <input class="hidden" type="file" name="data" id="data" ref="gamedata" accept=".txt" @change="importedData">
-        <button class="ml-2" @click="$store.commit('setIsHelpActive', true)">
+        <button
+          class="flex items-center justify-center py-1 px-2 gap-1 bg-black text-white rounded-full text-xs"
+          @click="$store.commit('setActiveModal', 'export_modal')"
+        >
+          <span>Export</span>
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-upload"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+          </span>
+        </button>
+        <button
+          class="ml-3 flex items-center justify-center py-1 px-2 gap-1 bg-black text-white rounded-full text-xs"
+          @click="$store.commit('setActiveModal', 'import_modal')"
+        >
+          <span>Import</span>
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-download"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </span>
+        </button>
+        <button
+          class="ml-2"
+          @click="$store.commit('setActiveModal', 'help_modal')"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -23,7 +71,10 @@
             />
           </svg>
         </button>
-        <button class="ml-1" @click="$store.commit('setIsStatsActive', true)">
+        <button
+          class="ml-1"
+          @click="$store.commit('setActiveModal', 'stat_modal')"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -41,65 +92,16 @@
 </template>
 
 <script>
-import { getHistory, createHistory } from '../common/localstorage.service'
 import { gameNumber } from "../common/helpers";
+
 export default {
   data() {
     return {
-      gameNumber: gameNumber()
+      gameNumber: gameNumber(),
     };
   },
 
-  methods: {
-    exportData() {
-      const history = getHistory()
-      const json = JSON.stringify(history)
-      const base64 = btoa(encodeURIComponent(json))
-
-      this.downloadBase64File(base64, 'letter_grid_data.txt')
-    },
-
-    importData() {
-      this.$refs.gamedata.click();
-    },
-
-    importedData(event) {
-      const file = event.target.files[0]
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-        const base64String = e.target.result.split(",")[1];
-        const json = atob(base64String)
-
-        createHistory(decodeURIComponent(json))
-      };
-
-      reader.readAsDataURL(file);
-    },
-
-    downloadBase64File(base64String, fileName) {
-      const byteCharacters = atob(base64String);
-      const byteNumbers = new Array(byteCharacters.length);
-
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-
-      // Create a Blob from the binary data
-      const blob = new Blob([byteArray], { type: 'application/octet-stream' });
-      const url = URL.createObjectURL(blob);
-
-      // Create a link to download the file
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = fileName;
-      link.click();
-
-      // Clean up
-      URL.revokeObjectURL(url);
-    }
-  }
+  methods: {},
 };
 </script>
 

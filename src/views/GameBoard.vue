@@ -156,7 +156,6 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 import NextTile from "@/components/NextTile";
 import PreviewTile from "@/components/PreviewTile";
-import StatisticsModal from "@/components/StatisticsModal";
 import WordScore from "@/components/WordScore";
 import wordListJSON from "../json/7L-words.json";
 import _ from "lodash";
@@ -165,7 +164,7 @@ const wordlist = JSON.parse(JSON.stringify(wordListJSON));
 export default {
   name: "GameBoard",
 
-  components: { PreviewTile, NextTile, StatisticsModal, WordScore },
+  components: { PreviewTile, NextTile, WordScore },
 
   data() {
     return {
@@ -810,68 +809,74 @@ export default {
     async showResults(words) {
       await new Promise((resolve, reject) => {
         words.forEach((word, index) => {
-          setTimeout(() => {
-            this.displayResults.push(word);
-            this.highlightBoardLetterReset([5, 5]);
-            this.totalScore += word.score;
+          setTimeout(
+            () => {
+              this.displayResults.push(word);
+              this.highlightBoardLetterReset([5, 5]);
+              this.totalScore += word.score;
 
-            let topCentre = 0;
-            let leftCentre = 0;
+              let topCentre = 0;
+              let leftCentre = 0;
 
-            let firstTopCentre = 0;
-            let firstLeftCentre = 0;
-            let lastTopCentre = 0;
-            let lastLeftCentre = 0;
+              let firstTopCentre = 0;
+              let firstLeftCentre = 0;
+              let lastTopCentre = 0;
+              let lastLeftCentre = 0;
 
-            word.indices.forEach((letter, i) => {
-              this.highlightLetter(letter[0], letter[1]);
+              word.indices.forEach((letter, i) => {
+                this.highlightLetter(letter[0], letter[1]);
 
-              if (i === 0) {
-                const tile = this.$refs[`row${letter[0]}col${letter[1]}`][0];
+                if (i === 0) {
+                  const tile = this.$refs[`row${letter[0]}col${letter[1]}`][0];
 
-                // get tile position from the top on the document
-                firstTopCentre = tile.offsetTop;
+                  // get tile position from the top on the document
+                  firstTopCentre = tile.offsetTop;
 
-                // get centre of tile
-                const top = tile.getBoundingClientRect().top + window.scrollY;
-                const left = tile.getBoundingClientRect().left;
-                const height = tile.getBoundingClientRect().height;
-                const width = tile.getBoundingClientRect().width;
+                  // get centre of tile
+                  const top = tile.getBoundingClientRect().top + window.scrollY;
+                  const left = tile.getBoundingClientRect().left;
+                  const height = tile.getBoundingClientRect().height;
+                  const width = tile.getBoundingClientRect().width;
 
-                firstTopCentre = top + height / 2;
-                firstLeftCentre = left + width / 2;
-              }
+                  firstTopCentre = top + height / 2;
+                  firstLeftCentre = left + width / 2;
+                }
 
-              if (i === word.indices.length - 1) {
-                const tile = this.$refs[`row${letter[0]}col${letter[1]}`][0];
+                if (i === word.indices.length - 1) {
+                  const tile = this.$refs[`row${letter[0]}col${letter[1]}`][0];
 
-                // get centre of tile
-                const top = tile.getBoundingClientRect().top + window.scrollY;
-                const left = tile.getBoundingClientRect().left;
-                const height = tile.getBoundingClientRect().height;
-                const width = tile.getBoundingClientRect().width;
+                  // get centre of tile
+                  const top = tile.getBoundingClientRect().top + window.scrollY;
+                  const left = tile.getBoundingClientRect().left;
+                  const height = tile.getBoundingClientRect().height;
+                  const width = tile.getBoundingClientRect().width;
 
-                lastTopCentre = top + height / 2;
-                lastLeftCentre = left + width / 2;
-              }
-            });
+                  lastTopCentre = top + height / 2;
+                  lastLeftCentre = left + width / 2;
+                }
+              });
 
-            topCentre = (firstTopCentre + lastTopCentre) / 2;
-            leftCentre = (firstLeftCentre + lastLeftCentre) / 2;
+              topCentre = (firstTopCentre + lastTopCentre) / 2;
+              leftCentre = (firstLeftCentre + lastLeftCentre) / 2;
 
-            this.showPoints(leftCentre, topCentre, word.score);
+              this.showPoints(leftCentre, topCentre, word.score);
 
-            this.$store.commit("updateScore", word.score);
+              this.$store.commit("updateScore", word.score);
 
-            this.currentScore = word.score;
-          }, 500 + 1000 * index);
+              this.currentScore = word.score;
+            },
+            500 + 1000 * index
+          );
 
-          setTimeout(() => {
-            this.highlightBoardLetterReset([5, 5]);
-            this.isScoringOver = true;
-            this.currentScore = 0;
-            resolve();
-          }, 500 + 1000 * words.length);
+          setTimeout(
+            () => {
+              this.highlightBoardLetterReset([5, 5]);
+              this.isScoringOver = true;
+              this.currentScore = 0;
+              resolve();
+            },
+            500 + 1000 * words.length
+          );
         });
       });
     },

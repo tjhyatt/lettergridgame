@@ -10,15 +10,24 @@
       >
         <td>
           <div class="table-row__rank">
-            {{ index + 1 }}{{ index === 0 ? 'st' : index === 1 ? 'nd' : index === 2 ? 'rd' : 'th' }}
+            {{ index + 1
+            }}{{
+              index === 0
+                ? "st"
+                : index === 1
+                  ? "nd"
+                  : index === 2
+                    ? "rd"
+                    : "th"
+            }}
           </div>
         </td>
-        <td style="width: 100%;">
+        <td style="width: 100%">
           <div class="table-row__word">
             {{ row.word }}
           </div>
         </td>
-        <td style="width: 135px;">
+        <td style="width: 135px">
           <div class="table-row__value">
             {{ row.value }}
           </div>
@@ -30,29 +39,29 @@
 
 <script>
 export default {
-  name: 'VHighscores',
+  name: "VHighscores",
 
-  props: ['rows'],
+  props: ["rows"],
 
   computed: {
-    env () {
-      return process.env
-    }
+    env() {
+      return process.env;
+    },
   },
 
   methods: {
-    viewGame (word) {
-      let posArray = word.pos
+    viewGame(word) {
+      let posArray = word.pos;
 
-      let query = '?w='
-      posArray.forEach(tilePos => {
-        query += tilePos[0].toString() + tilePos[1].toString() + ','
-      })
+      let query = "?w=";
+      posArray.forEach((tilePos) => {
+        query += tilePos[0].toString() + tilePos[1].toString() + ",";
+      });
 
-      this.$router.push(`/game/${word.gameId}/${word.boardId}/${query}`)
-    }
-  }
-}
+      this.$router.push(`/game/${word.gameId}/${word.boardId}/${query}`);
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -101,7 +110,7 @@ export default {
       color: #222;
       display: flex;
       flex-shrink: 0;
-      font-size: .9em;
+      font-size: 0.9em;
       height: 25px;
       justify-content: center;
       margin: 0 12px;
@@ -137,7 +146,7 @@ export default {
 
     &__username {
       line-height: normal;
-      margin: 0 12px .2em 0;
+      margin: 0 12px 0.2em 0;
       max-width: 180px;
       word-wrap: break-word;
     }
@@ -145,7 +154,7 @@ export default {
     &__date {
       font-size: 12px;
       margin: auto;
-      opacity: .8;
+      opacity: 0.8;
       text-align: center;
       width: 35px;
     }
@@ -162,7 +171,11 @@ export default {
 }
 
 @keyframes rotate {
-  0% { transform: rotate(0); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
