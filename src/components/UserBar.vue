@@ -6,7 +6,10 @@
       </div>
 
       <div class="flex items-center text-black opacity-80 ml-auto">
-        <button @click="$store.commit('setIsHelpActive', true)">
+        <button @click="exportData">Export</button>
+        <button class="ml-2" @click="importData">Import</button>
+        <input class="hidden" type="file" name="data" id="data" ref="gamedata" accept=".txt" @change="importedData">
+        <button class="ml-2" @click="$store.commit('setIsHelpActive', true)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -38,13 +41,65 @@
 </template>
 
 <script>
+import { getHistory, createHistory } from '../common/localstorage.service'
 import { gameNumber } from "../common/helpers";
 export default {
   data() {
     return {
-      gameNumber: gameNumber(),
+      gameNumber: gameNumber()
     };
   },
+
+  methods: {
+    exportData() {
+      const history = getHistory()
+      const json = JSON.stringify(history)
+      const base64 = btoa(encodeURIComponent(json))
+
+      this.downloadBase64File(base64, 'letter_grid_data.txt')
+    },
+
+    importData() {
+      this.$refs.gamedata.click();
+    },
+
+    importedData(event) {
+      const file = event.target.files[0]
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const base64String = e.target.result.split(",")[1];
+        const json = atob(base64String)
+
+        createHistory(decodeURIComponent(json))
+      };
+
+      reader.readAsDataURL(file);
+    },
+
+    downloadBase64File(base64String, fileName) {
+      const byteCharacters = atob(base64String);
+      const byteNumbers = new Array(byteCharacters.length);
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+
+      // Create a Blob from the binary data
+      const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+      const url = URL.createObjectURL(blob);
+
+      // Create a link to download the file
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      link.click();
+
+      // Clean up
+      URL.revokeObjectURL(url);
+    }
+  }
 };
 </script>
 

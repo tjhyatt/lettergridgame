@@ -29,10 +29,8 @@ export const getHistory = () => {
   return JSON.parse(window.localStorage.getItem('gamehistory'))
 }
 
-export const createHistory = () => {
-  window.localStorage.setItem('gamehistory', JSON.stringify({
-    games: []
-  }))
+export const createHistory = (data) => {
+  window.localStorage.setItem('gamehistory', data)
 }
 
 export const addHistory = (game) => {
