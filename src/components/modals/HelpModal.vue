@@ -3,7 +3,7 @@
     <div
       v-show="isActive"
       class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-black bg-opacity-50 py-4 z-50"
-      @click="$store.commit('setIsHelpActive', false)"
+      @click="$store.commit('setActiveModal', '')"
     >
       <div
         class="w-full max-w-lg max-h-full h-auto text-gray-900 bg-gray-100 rounded-lg p-4 overflow-auto"

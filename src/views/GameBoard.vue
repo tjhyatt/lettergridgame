@@ -159,6 +159,7 @@ import PreviewTile from "@/components/PreviewTile";
 import WordScore from "@/components/WordScore";
 import wordListJSON from "../json/7L-words.json";
 import _ from "lodash";
+
 const wordlist = JSON.parse(JSON.stringify(wordListJSON));
 
 export default {
@@ -204,7 +205,6 @@ export default {
       scoreTargets: "getScoreTargets",
       tile: "getNextTile",
       previewTile: "getPreviewTile",
-      isStatsActive: "getIsStatsActive",
     }),
 
     boardStyles() {
@@ -232,7 +232,7 @@ export default {
   watch: {
     isGameOver(newValue) {
       if (newValue) {
-        this.$store.commit("setIsStatsActive", true);
+        this.$store.commit("setActiveModal", "stat_modal");
 
         this.$router.push(`/score/${this.score}`);
       }
