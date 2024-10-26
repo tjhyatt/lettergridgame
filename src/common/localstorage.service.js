@@ -35,17 +35,20 @@ export const createHistory = (data) => {
 
 export const addHistory = (game) => {
   const history = JSON.parse(window.localStorage.getItem("gamehistory"));
+  const foundGame = history.games.some((game) => game.id === game.id);
+  
+  if (!foundGame) {
+    let newHistory = {};
 
-  let newHistory = {};
+    if (history) {
+      newHistory = history;
+      newHistory.games.push(game);
+    } else {
+      newHistory = {
+        games: [game],
+      };
+    }
 
-  if (history) {
-    newHistory = history;
-    newHistory.games.push(game);
-  } else {
-    newHistory = {
-      games: [game],
-    };
+    window.localStorage.setItem("gamehistory", JSON.stringify(newHistory));
   }
-
-  window.localStorage.setItem("gamehistory", JSON.stringify(newHistory));
 };
