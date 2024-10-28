@@ -171,23 +171,23 @@ const mutations = {
     });
 
     if (state.isGameOver) {
-      let award = "No award";
+      let award = 0;
       if (state.score >= state.scoreTargets[0]) {
-        award = "Bronze";
+        award = 1;
       }
 
       if (state.score >= state.scoreTargets[1]) {
-        award = "Silver";
+        award = 2;
       }
 
       if (state.score >= state.scoreTargets[2]) {
-        award = "Gold";
+        award = 3;
       }
 
       addHistory({
-        gameNumber: currentSeed,
-        score: state.score,
-        award: award,
+        n: currentSeed,
+        s: state.score,
+        a: award,
       });
     }
   },

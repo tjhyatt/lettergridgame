@@ -186,11 +186,11 @@ export default {
       if (!this.history) return 0;
 
       const finishedGame = this.history.games.find(
-        (game) => game.gameNumber === gameNumber()
+        (game) => game.n === gameNumber()
       );
 
       if (finishedGame) {
-        return finishedGame.score;
+        return finishedGame.s;
       }
 
       return "-";
@@ -200,7 +200,7 @@ export default {
       if (!this.history) return 0;
 
       const scores = this.history.games.map((game) => {
-        return game.score;
+        return game.s;
       });
 
       return Math.max(...scores);
@@ -211,7 +211,7 @@ export default {
 
       let total = 0;
       this.history.games.forEach((game) => {
-        total += game.score;
+        total += game.s;
       });
 
       return (total / this.played).toFixed(1);
@@ -225,16 +225,16 @@ export default {
       if (!this.history) return 0;
 
       const nothingCount = this.history.games.filter(
-        (game) => game.award === "No award"
+        (game) => game.a === 0
       ).length;
       const bronzeCount = this.history.games.filter(
-        (game) => game.award === "Bronze"
+        (game) => game.a === 1
       ).length;
       const silverCount = this.history.games.filter(
-        (game) => game.award === "Silver"
+        (game) => game.a === 2
       ).length;
       const goldCount = this.history.games.filter(
-        (game) => game.award === "Gold"
+        (game) => game.a === 3
       ).length;
 
       return [nothingCount, bronzeCount, silverCount, goldCount];
@@ -335,6 +335,7 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s 0.1s;
 }
+
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }

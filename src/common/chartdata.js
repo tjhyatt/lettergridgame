@@ -13,13 +13,13 @@ export const chartData = () => {
     // get games and sort by gameNumber, return last seven games
     games = history.games
       .sort((a, b) => {
-        return a.gameNumber - b.gameNumber;
+        return a.n - b.n;
       })
       .slice(-7);
   }
 
-  const labels = games.map((game) => "#" + game.gameNumber);
-  const scores = games.map((game) => game.score);
+  const labels = games.map((game) => "#" + game.n);
+  const scores = games.map((game) => game.s);
   const highest = Math.max(...scores);
   // const lowest = Math.min(...scores)
   const stepSize = (Math.round(highest / 10) * 10) / 4;

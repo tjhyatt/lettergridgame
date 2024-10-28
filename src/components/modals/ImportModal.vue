@@ -28,7 +28,8 @@
             <div class="uppercase text-center mb-4">Import Data</div>
             <p>
               Importing data will override any game data currently saved. Click
-              the button below and import the file called 'lettergrid_data.txt'.
+              the button below and import the file called
+              'letter_grid_data.txt'.
             </p>
 
             <button

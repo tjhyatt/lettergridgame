@@ -29,7 +29,7 @@
             <p>
               If you're changing browsers and want to keep your data, export it
               by clicking the button below. This will download a file called
-              'lettergrid_data.txt'.
+              'letter_grid_data.txt'.
             </p>
 
             <button
