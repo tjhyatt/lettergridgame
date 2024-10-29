@@ -3,6 +3,7 @@
     <UserBar />
     <ExportModal />
     <ImportModal />
+    <DataModal />
     <HelpModal />
     <StatisticsModal />
     <router-view />
@@ -13,13 +14,21 @@
 import ExportModal from "./components/modals/ExportModal.vue";
 import ImportModal from "./components/modals/ImportModal.vue";
 import HelpModal from "./components/modals/HelpModal.vue";
+import DataModal from "./components/modals/DataModal.vue";
 import StatisticsModal from "./components/modals/StatisticsModal.vue";
 import UserBar from "./components/UserBar.vue";
 
 export default {
   name: "App",
 
-  components: { UserBar, ExportModal, ImportModal, HelpModal, StatisticsModal },
+  components: {
+    UserBar,
+    ExportModal,
+    ImportModal,
+    HelpModal,
+    DataModal,
+    StatisticsModal,
+  },
 };
 </script>
 

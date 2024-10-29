@@ -6,58 +6,7 @@
       </div>
 
       <div class="flex items-center text-black opacity-80 ml-auto">
-        <button
-          class="flex items-center justify-center py-1 px-2 gap-1 bg-black text-white rounded-full text-xs"
-          @click="$store.commit('setActiveModal', 'export_modal')"
-        >
-          <span>Export</span>
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-upload"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-          </span>
-        </button>
-        <button
-          class="ml-3 flex items-center justify-center py-1 px-2 gap-1 bg-black text-white rounded-full text-xs"
-          @click="$store.commit('setActiveModal', 'import_modal')"
-        >
-          <span>Import</span>
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-download"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-          </span>
-        </button>
-        <button
-          class="ml-2"
-          @click="$store.commit('setActiveModal', 'help_modal')"
-        >
+        <button @click="$store.commit('setActiveModal', 'help_modal')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -72,7 +21,31 @@
           </svg>
         </button>
         <button
-          class="ml-1"
+          class="ml-2"
+          @click="$store.commit('setActiveModal', 'data_modal')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-8 h-8 px-1"
+          >
+            <path
+              d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875Z"
+            />
+            <path
+              d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 0 0 1.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 0 0 1.897 1.384C6.809 12.164 9.315 12.75 12 12.75Z"
+            />
+            <path
+              d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 0 0 1.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 0 0 1.897 1.384C6.809 15.914 9.315 16.5 12 16.5Z"
+            />
+            <path
+              d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 0 0 1.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 0 0 1.897 1.384C6.809 19.664 9.315 20.25 12 20.25Z"
+            />
+          </svg>
+        </button>
+        <button
+          class="ml-2"
           @click="$store.commit('setActiveModal', 'stat_modal')"
         >
           <svg

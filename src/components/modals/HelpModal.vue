@@ -24,7 +24,7 @@
               />
             </svg>
           </button>
-          <div class="w-full mb-8">
+          <div class="w-full mb-8 text-left">
             <div class="uppercase text-center mb-4">How to play</div>
             <p>
               Drag and drop the green "Current Tile" onto an empty spot on the
@@ -43,7 +43,7 @@
               and have fun!
             </p>
           </div>
-          <div class="w-full mb-4">
+          <div class="w-full mb-4 text-left">
             <div class="uppercase text-center mb-4">Scoring</div>
             <p>
               Scoring works the same as Scrabble. Single letter bonuses are

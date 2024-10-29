@@ -97,3 +97,9 @@ export const addHistory = (game) => {
     window.localStorage.setItem("h", JSON.stringify(newHistory));
   }
 };
+
+export const clearData = () => {
+  window.localStorage.removeItem("gamestate");
+  window.localStorage.removeItem("gamenumber");
+  window.localStorage.removeItem("h");
+};
