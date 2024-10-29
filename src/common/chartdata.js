@@ -36,7 +36,7 @@ export const chartData = () => {
           borderColor: "#3df550",
           fontColor: "#222",
           borderWidth: 3,
-          tension: 0,
+          tension: 0.2,
           padding: 5,
         },
       ],

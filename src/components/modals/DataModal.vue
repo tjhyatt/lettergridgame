@@ -182,7 +182,9 @@ export default {
     },
 
     clearData() {
-      clearData();
+      if (window.confirm("Are you sure you want to clear your data?")) {
+        clearData();
+      }
     },
   },
 };
