@@ -4,43 +4,50 @@
     v-shake="{ active: currentScore, intensity: currentScore }"
   >
     <div v-if="isGameReady" class="gameboard">
-      <div class="score">
-        <div class="score__pill bg-white text-black">{{ score }}</div>
-        <div class="flex flex-col mt-3">
-          <!-- <div class="text-center text-gray-800 mb-2">Score Targets</div> -->
-          <div class="flex">
-            <div
-              v-for="(target, i) in scoreTargets"
-              :key="target"
-              class="score__pill items-start text-sm mx-1"
-              :class="[
-                { 'bg-bronze text-black': i === 0 },
-                { 'bg-silver text-black': i === 1 },
-                { 'bg-gold text-black': i === 2 },
-              ]"
-            >
-              <svg
-                v-if="score >= target"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5"
+      <div class="gameboard__top">
+        <div class="score">
+          <div class="score__pill bg-white text-black">{{ score }}</div>
+          <div class="flex flex-col mt-3">
+            <!-- <div class="text-center text-gray-800 mb-2">Score Targets</div> -->
+            <div class="flex">
+              <div
+                v-for="(target, i) in scoreTargets"
+                :key="target"
+                class="score__pill items-start text-sm mx-1"
+                :class="[
+                  { 'bg-bronze text-black': i === 0 },
+                  { 'bg-silver text-black': i === 1 },
+                  { 'bg-gold text-black': i === 2 },
+                ]"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4.5 12.75l6 6 9-13.5"
-                />
-              </svg>
-              <span v-else>{{ target }}</span>
+                <svg
+                  v-if="score >= target"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4.5 12.75l6 6 9-13.5"
+                  />
+                </svg>
+                <span v-else>{{ target }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div class="board" :style="boardStyles">
+        <div class="tile-box tile-box--preview">
+          <div class="tile-box__heading">Next Tile</div>
+          <preview-tile v-if="previewTile" :tile="previewTile" />
+        </div>
+
         <template v-for="(row, rowIndex) in board">
           <div
             v-for="(slot, colIndex) in row"
@@ -73,8 +80,8 @@
       </div>
 
       <div class="bottom-row">
-        <div class="next-tile">
-          <div class="next-tile__heading">Current Tile</div>
+        <div class="tile-box">
+          <div class="tile-box__heading">Current Tile</div>
           <next-tile
             v-if="!isGameOver"
             :tile="tile"
@@ -83,18 +90,50 @@
             @highlightBoardLetterReset="highlightBoardLetterReset([5, 5])"
             @highlightBinLetter="highlightBinLetter"
             @highlightBinLetterReset="highlightBinLetterReset"
+            @highlightHoldLetter="highlightHoldLetter"
+            @highlightHoldLetterReset="highlightHoldLetterReset"
             @setBoardTile="setBoardTile"
             @setBinTile="setBinTile"
+            @setHoldTile="setHoldTile"
           />
         </div>
 
-        <div class="next-tile">
-          <div class="next-tile__heading">Next Tile</div>
-          <preview-tile v-if="previewTile" :tile="previewTile" />
+        <div class="tile-box hold">
+          <div class="tile-box__heading">Hold Tile</div>
+          <HoldTile
+            v-if="holdTile && holdTile.value"
+            :tile="holdTile"
+            :isTouch="isTouch"
+            @highlightBoardLetter="highlightBoardLetter"
+            @highlightBoardLetterReset="highlightBoardLetterReset([5, 5])"
+            @highlightBinLetter="highlightBinLetter"
+            @highlightBinLetterReset="highlightBinLetterReset"
+            @highlightHoldLetter="highlightHoldLetter"
+            @highlightHoldLetterReset="highlightHoldLetterReset"
+            @setBoardTile="
+              (tile, hoveredIndices) =>
+                setBoardTile(tile, hoveredIndices, 'hold')
+            "
+            @setBinTile="(tile) => setBinTile(tile, 'hold')"
+          />
+
+          <div
+            v-if="typeof holdTile !== 'undefined' && !holdTile.value"
+            class="tile tile--slot"
+            :class="{
+              'tile--locked': false,
+              'tile--highlight': isHighlightedHoldLetter,
+            }"
+          >
+            <div type="hold" class="tile-slot tile__letter"></div>
+            <div class="hold-icon"></div>
+          </div>
         </div>
 
-        <div v-if="binSize > 0" class="bin">
-          <div class="bin__heading">Bin {{ bin.length }}/{{ binSize }}</div>
+        <div v-if="binSize > 0" class="tile-box bin">
+          <div class="tile-box__heading">
+            Bin {{ bin.length }}/{{ binSize }}
+          </div>
           <div
             class="tile tile--slot"
             :class="{
@@ -103,6 +142,11 @@
             }"
           >
             <div type="bin" class="tile-slot tile__letter"></div>
+            <div class="bin-icon"></div>
+            <div
+              class="bin-filled"
+              :style="`height: ${(bin.length / binSize) * 100}%`"
+            ></div>
           </div>
         </div>
       </div>
@@ -154,6 +198,7 @@
 import { gameNumber } from "../common/helpers";
 import Vue from "vue";
 import { mapGetters } from "vuex";
+import HoldTile from "@/components/HoldTile";
 import NextTile from "@/components/NextTile";
 import PreviewTile from "@/components/PreviewTile";
 import WordScore from "@/components/WordScore";
@@ -165,7 +210,7 @@ const wordlist = JSON.parse(JSON.stringify(wordListJSON));
 export default {
   name: "GameBoard",
 
-  components: { PreviewTile, NextTile, WordScore },
+  components: { HoldTile, PreviewTile, NextTile, WordScore },
 
   data() {
     return {
@@ -175,6 +220,7 @@ export default {
       displayResults: [],
       highlightedBoardLetters: [],
       isHighlightedBinLetter: false,
+      isHighlightedHoldLetter: false,
 
       isFindingWords: false,
       results: [],
@@ -199,6 +245,7 @@ export default {
       board: "getBoard",
       boardSize: "getBoardSize",
       bonusTiles: "getBonusTiles",
+      holdTile: "getHoldTile",
       isGameOver: "getIsGameOver",
       roundIndex: "getRoundIndex",
       score: "getScore",
@@ -464,7 +511,7 @@ export default {
       this.showResults(this.allWords);
     },
 
-    async setBoardTile(tile, hoveredIndices) {
+    async setBoardTile(tile, hoveredIndices, type = "") {
       this.$store.commit("setIsNextTileReady", false);
 
       let _tile = tile;
@@ -501,6 +548,10 @@ export default {
           this.$store.commit("setIsNextTileReady", true);
           return;
         }
+      }
+
+      if (type === "hold") {
+        this.$store.commit("setHoldTile", {});
       }
 
       this.roundWords = [];
@@ -739,13 +790,26 @@ export default {
         await this.showResults(this.roundWords);
       }
 
-      this.$store.commit("updateRound");
+      this.$store.commit("updateRound", type);
+
       this.$store.commit("setIsNextTileReady", true);
     },
 
-    setBinTile(tile) {
+    setBinTile(tile, type = "") {
       if (this.bin.length < this.binSize) {
         this.$store.commit("addToBin", tile);
+
+        if (type === "hold") {
+          this.$store.commit("setHoldTile", {});
+        } else {
+          this.$store.commit("updateRound");
+        }
+      }
+    },
+
+    setHoldTile(tile) {
+      if (!this.holdTile.letter) {
+        this.$store.commit("setHoldTile", tile);
         this.$store.commit("updateRound");
       }
     },
@@ -757,6 +821,10 @@ export default {
 
     highlightBinLetter() {
       this.isHighlightedBinLetter = true;
+    },
+
+    highlightHoldLetter() {
+      this.isHighlightedHoldLetter = true;
     },
 
     highlightLetter(rowH, colH) {
@@ -781,6 +849,10 @@ export default {
 
     highlightBinLetterReset() {
       this.isHighlightedBinLetter = false;
+    },
+
+    highlightHoldLetterReset() {
+      this.isHighlightedHoldLetter = false;
     },
 
     setTileHighlightQuery() {
@@ -925,7 +997,23 @@ $tilecount: 5;
 }
 
 .gameboard {
-  padding: 100px 0 60px;
+  padding: 8em 0 6em;
+
+  &__top {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 1em;
+    position: relative;
+    width: 20.25rem;
+
+    @media screen and (min-width: 480px) {
+      width: 23rem;
+    }
+
+    @media screen and (min-width: 768px) {
+      width: 27rem;
+    }
+  }
 }
 
 .game-details {
@@ -949,10 +1037,8 @@ $tilecount: 5;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 50%;
 
   &__heading {
-    background: #fff;
     border-radius: 0.3em;
     color: #222;
     font-size: 0.75em;
@@ -964,31 +1050,116 @@ $tilecount: 5;
   }
 
   .tile {
-    background-image: url(../assets/trash.svg);
-    background-position: 50%;
-    background-repeat: no-repeat;
+    // background-color: #edf2f9;
+    // background-image: url(../assets/trash.svg);
+    // background-position: 50%;
+    // background-repeat: no-repeat;
+    box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 
     &--locked {
       background-image: none;
     }
+
+    .bin-filled {
+      background-color: rgb(75, 147, 255);
+      bottom: 0;
+      height: 100%;
+      position: absolute;
+      width: 100%;
+    }
+
+    .bin-icon {
+      background-image: url(../assets/trash.svg);
+      background-position: 50%;
+      background-repeat: no-repeat;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
+    }
   }
 }
 
-.next-tile {
+.hold {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 50%;
 
   &__heading {
-    background: #fff;
     border-radius: 0.3em;
     color: #222;
     font-size: 0.75em;
     font-weight: 700;
     margin: 0 0 5px;
     padding: 0.5em 1.3em;
+    text-transform: uppercase;
+    width: max-content;
+  }
+
+  .tile {
+    // background-image: url(../assets/hold.svg);
+    // background-position: 50%;
+    // background-repeat: no-repeat;
+    // box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+
+    &--locked {
+      background-image: none;
+    }
+
+    .hold-icon {
+      background-image: url(../assets/hold.svg);
+      background-position: 50%;
+      background-repeat: no-repeat;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
+      box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.tile-box {
+  align-items: center;
+  background: #fff;
+  border-radius: 0.3em;
+  // box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 0.25em 0.3em;
+  width: 5.75em;
+
+  &--preview {
+    aspect-ratio: 52 / 68;
+    position: absolute;
+    top: -9em;
+    left: 0;
+    right: unset;
+    font-size: 0.9em;
+    padding: 0;
+    width: 5.2em;
+
+    @media screen and (min-width: 560px) {
+      top: 50%;
+      transform: translateY(-50%);
+      bottom: unset;
+      left: -$tilesize - $tilegap - 1.5em;
+    }
+  }
+
+  &__heading {
+    border-radius: 0.3em;
+    color: #222;
+    font-size: 0.75em;
+    font-weight: 700;
+    margin: 0 0 0.1em;
+    padding: 0.5em 0 0.25em;
     text-transform: uppercase;
     width: max-content;
   }
@@ -1046,7 +1217,9 @@ $tilecount: 5;
 
 .bottom-row {
   display: flex;
-  margin: 25px 0 0;
+  gap: 2em;
+  justify-content: center;
+  margin: 2em auto 0;
   position: relative;
   text-align: center;
   z-index: 10;
@@ -1113,7 +1286,7 @@ $tilecount: 5;
   }
 
   &--highlight {
-    background: rgba(44, 122, 239, 0.9);
+    background-color: rgb(75, 147, 255) !important;
 
     .tile__letter,
     .tile__value {

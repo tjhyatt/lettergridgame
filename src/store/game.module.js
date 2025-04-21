@@ -21,6 +21,7 @@ const state = {
   board: [],
   boardSize: [5, 5],
   bonusTiles: [],
+  holdTile: {},
   isGameOver: false,
   isNextTileReady: true,
   roundIndex: 0,
@@ -48,6 +49,10 @@ const getters = {
 
   getBonusTiles(state) {
     return state.bonusTiles;
+  },
+
+  getHoldTile(state) {
+    return state.holdTile;
   },
 
   getIsGameOver(state) {
@@ -99,6 +104,7 @@ const mutations = {
       binSize: state.binSize,
       board: state.board,
       bonusTiles: state.bonusTiles,
+      holdTile: state.holdTile,
       isGameOver: state.isGameOver,
       roundIndex: state.roundIndex,
       score: state.score,
@@ -111,6 +117,10 @@ const mutations = {
 
   setBonusTiles: (state, payload) => {
     state.bonusTiles = payload;
+  },
+
+  setHoldTile: (state, payload) => {
+    state.holdTile = payload;
   },
 
   setIsGameOver: (state, payload) => {
@@ -130,6 +140,7 @@ const mutations = {
       binSize: state.binSize,
       board: state.board,
       bonusTiles: state.bonusTiles,
+      holdTile: state.holdTile,
       isGameOver: state.isGameOver,
       roundIndex: state.roundIndex,
       score: state.score,
@@ -156,8 +167,11 @@ const mutations = {
     state.board[row][col] = tile;
   },
 
-  updateRound: (state) => {
-    state.roundIndex++;
+  updateRound: (state, type) => {
+    if (type !== "hold") {
+      state.roundIndex++;
+    }
+
     state.isGameOver = isGameOver(state.board);
 
     setLocalState({
@@ -165,6 +179,7 @@ const mutations = {
       binSize: state.binSize,
       board: state.board,
       bonusTiles: state.bonusTiles,
+      holdTile: state.holdTile,
       isGameOver: state.isGameOver,
       roundIndex: state.roundIndex,
       score: state.score,
@@ -518,6 +533,7 @@ const actions = {
       commit("setBin", localState.bin);
       commit("setBinSize", localState.binSize);
       commit("setBoard", localState.board);
+      commit("setHoldTile", localState.holdTile);
       commit("setRoundIndex", localState.roundIndex);
       commit("setScore", localState.score);
     } else {

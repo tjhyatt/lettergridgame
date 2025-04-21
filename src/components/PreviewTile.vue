@@ -71,7 +71,7 @@ $tilegap: 0.5em;
 .tile {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 0.25em;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
   cursor: not-allowed;
   height: $tilesize;
@@ -139,7 +139,8 @@ $tilegap: 0.5em;
   }
 
   &--preview {
-    background: rgb(195, 195, 195);
+    background: rgb(255, 255, 255);
+    // border: 1px solid rgb(191, 191, 191);
     scale: 0.85;
     // opacity: 0.8;
     pointer-events: none;
