@@ -1065,7 +1065,9 @@ $tilecount: 5;
       background-color: rgb(75, 147, 255);
       bottom: 0;
       height: 100%;
+      pointer-events: none;
       position: absolute;
+      user-select: none;
       width: 100%;
     }
 
