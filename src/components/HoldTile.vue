@@ -7,9 +7,10 @@
       { 'tile--click-dragging': isClickDragging },
     ]"
     :style="styles"
-    @mousedown="clickStart"
-    @mousemove="clickMove"
-    @mouseup="clickEnd"
+    ref="holdTile"
+    @pointerdown="clickStart"
+    @pointermove="clickMove"
+    @pointerup="clickEnd"
     @touchstart="touchStart"
     @touchmove="touchmove"
     @touchend="touchend"
@@ -89,6 +90,7 @@ export default {
 
     clickStart(e) {
       this.isClicked = true;
+      this.$refs.holdTile.setPointerCapture(e.pointerId);
 
       if (this.initPos.x === 0 && this.initPos.y === 0) {
         this.initPos.x = e.clientX;
@@ -144,9 +146,10 @@ export default {
       }
     },
 
-    clickEnd() {
+    clickEnd(e) {
       this.isClicked = false;
       this.isClickDragging = false;
+      this.$refs.holdTile.releasePointerCapture(e.pointerId);
 
       if (this.hoveredTileType === "board") {
         this.$emit("setBoardTile", this.tile, this.hoveredTileIndices);
