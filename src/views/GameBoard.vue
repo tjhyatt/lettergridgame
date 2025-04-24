@@ -40,10 +40,15 @@
             </div>
           </div>
         </div>
+
+        <div class="tile-box tile-box--preview flex md:hidden">
+          <div class="tile-box__heading">Next Tile</div>
+          <preview-tile v-if="previewTile" :tile="previewTile" />
+        </div>
       </div>
 
       <div class="board" :style="boardStyles">
-        <div class="tile-box tile-box--preview">
+        <div class="tile-box tile-box--preview md:flex hidden">
           <div class="tile-box__heading">Next Tile</div>
           <preview-tile v-if="previewTile" :tile="previewTile" />
         </div>
@@ -80,7 +85,7 @@
       </div>
 
       <div class="bottom-row">
-        <div class="tile-box">
+        <div class="tile-box flex">
           <div class="tile-box__heading">Current Tile</div>
           <next-tile
             v-if="!isGameOver"
@@ -1131,7 +1136,7 @@ $tilecount: 5;
   background: #fff;
   border-radius: 0.3em;
   // box-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.2);
-  display: flex;
+  // display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 0 0.25em 0.3em;
@@ -1140,14 +1145,14 @@ $tilecount: 5;
   &--preview {
     aspect-ratio: 52 / 68;
     position: absolute;
-    top: -9em;
+    top: -1em;
     left: 0;
     right: unset;
     font-size: 0.9em;
     padding: 0;
     width: 5.2em;
 
-    @media screen and (min-width: 560px) {
+    @media screen and (min-width: 768px) {
       top: 50%;
       transform: translateY(-50%);
       bottom: unset;
