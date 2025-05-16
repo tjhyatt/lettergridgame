@@ -89,96 +89,102 @@ export default {
     },
 
     clickStart(e) {
-      this.isClicked = true;
+      if (e.pointerType === "mouse") {
+        this.isClicked = true;
 
-      this.$refs.nextTile.setPointerCapture(e.pointerId);
+        this.$refs.nextTile.setPointerCapture(e.pointerId);
 
-      if (this.initPos.x === 0 && this.initPos.y === 0) {
-        this.initPos.x = e.clientX;
-        this.initPos.y = e.clientY;
+        if (this.initPos.x === 0 && this.initPos.y === 0) {
+          this.initPos.x = e.clientX;
+          this.initPos.y = e.clientY;
+        }
       }
     },
 
     clickMove(e) {
-      if (this.isClicked) {
-        this.isClickDragging = true;
+      if (e.pointerType === "mouse") {
+        if (this.isClicked) {
+          this.isClickDragging = true;
 
-        this.pos.x += e.movementX;
-        this.pos.y += e.movementY;
+          this.pos.x += e.movementX;
+          this.pos.y += e.movementY;
 
-        const hoveredElements = document.elementsFromPoint(
-          e.clientX,
-          e.clientY
-        );
-        const hoveredTile = hoveredElements.find((el) => {
-          return el.className === "tile-slot tile__letter";
-        });
+          const hoveredElements = document.elementsFromPoint(
+            e.clientX,
+            e.clientY
+          );
+          const hoveredTile = hoveredElements.find((el) => {
+            return el.className === "tile-slot tile__letter";
+          });
 
-        if (hoveredTile) {
-          this.hoveredTileType = hoveredTile.getAttribute("type")
-            ? hoveredTile.getAttribute("type")
-            : null;
+          if (hoveredTile) {
+            this.hoveredTileType = hoveredTile.getAttribute("type")
+              ? hoveredTile.getAttribute("type")
+              : null;
 
-          if (this.hoveredTileType === "board") {
-            const row = hoveredTile.getAttribute("row");
-            const col = hoveredTile.getAttribute("col");
+            if (this.hoveredTileType === "board") {
+              const row = hoveredTile.getAttribute("row");
+              const col = hoveredTile.getAttribute("col");
 
-            this.hoveredTileIndices.row = row;
-            this.hoveredTileIndices.col = col;
-            this.$emit("highlightBoardLetter", row, col);
-          } else if (this.hoveredTileType === "bin") {
-            const row = hoveredTile.getAttribute("row");
+              this.hoveredTileIndices.row = row;
+              this.hoveredTileIndices.col = col;
+              this.$emit("highlightBoardLetter", row, col);
+            } else if (this.hoveredTileType === "bin") {
+              const row = hoveredTile.getAttribute("row");
 
-            this.hoveredTileIndices.row = row;
-            this.hoveredTileIndices.col = null;
-            this.$emit("highlightBinLetter", row);
-          } else if (this.hoveredTileType === "hold") {
-            const row = hoveredTile.getAttribute("row");
+              this.hoveredTileIndices.row = row;
+              this.hoveredTileIndices.col = null;
+              this.$emit("highlightBinLetter", row);
+            } else if (this.hoveredTileType === "hold") {
+              const row = hoveredTile.getAttribute("row");
 
-            this.hoveredTileIndices.row = row;
-            this.hoveredTileIndices.col = null;
-            this.$emit("highlightHoldLetter", row);
+              this.hoveredTileIndices.row = row;
+              this.hoveredTileIndices.col = null;
+              this.$emit("highlightHoldLetter", row);
+            } else {
+              this.resetTile();
+            }
           } else {
             this.resetTile();
           }
-        } else {
-          this.resetTile();
         }
       }
     },
 
     clickEnd(e) {
-      this.isClicked = false;
-      this.isClickDragging = false;
+      if (e.pointerType === "mouse") {
+        this.isClicked = false;
+        this.isClickDragging = false;
 
-      this.$refs.nextTile.releasePointerCapture(e.pointerId);
+        this.$refs.nextTile.releasePointerCapture(e.pointerId);
 
-      if (this.hoveredTileType === "board") {
-        this.$emit("setBoardTile", this.tile, this.hoveredTileIndices);
+        if (this.hoveredTileType === "board") {
+          this.$emit("setBoardTile", this.tile, this.hoveredTileIndices);
 
-        this.pos = {
-          x: 0,
-          y: 0,
-        };
+          this.pos = {
+            x: 0,
+            y: 0,
+          };
+        }
+
+        if (this.hoveredTileType === "bin") {
+          this.$emit("setBinTile", this.tile, this.hoveredTileIndices);
+          this.pos = {
+            x: 0,
+            y: 0,
+          };
+        }
+
+        if (this.hoveredTileType === "hold") {
+          this.$emit("setHoldTile", this.tile, this.hoveredTileIndices);
+          this.pos = {
+            x: 0,
+            y: 0,
+          };
+        }
+
+        this.resetTile();
       }
-
-      if (this.hoveredTileType === "bin") {
-        this.$emit("setBinTile", this.tile, this.hoveredTileIndices);
-        this.pos = {
-          x: 0,
-          y: 0,
-        };
-      }
-
-      if (this.hoveredTileType === "hold") {
-        this.$emit("setHoldTile", this.tile, this.hoveredTileIndices);
-        this.pos = {
-          x: 0,
-          y: 0,
-        };
-      }
-
-      this.resetTile();
     },
 
     touchStart(e) {
